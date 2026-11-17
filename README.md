@@ -4,6 +4,7 @@ A site for the church family with five pages (Layout, Invite, Day of, Serve, Dis
 
 ## Files
 - `index.html` — the whole website (put it on GitHub Pages)
+- `og-turkey.jpg` and `apple-touch-icon.png` — the turkey picture shown when you text the link, and the home-screen icon. Upload them next to `index.html`.
 - `Code.gs` — the Google Apps Script that connects the site to the sheet
 
 ## Set up (about 10 minutes)
@@ -11,7 +12,7 @@ A site for the church family with five pages (Layout, Invite, Day of, Serve, Dis
 2. Click **Run → testRead** once and approve the permissions. Check **View → Logs**; you should see the slots and dishes.
 3. **Deploy → New deployment → Web app**. Set Execute as **Me** and Who has access **Anyone**. Copy the URL that ends in `/exec`.
 4. In `index.html`, paste that URL into `API_URL: ""` near the top.
-5. Upload `index.html` to a GitHub Pages repo (for example `biblewithfriends.github.io/thanksgiving`) and share the link in the group chat.
+5. Upload `index.html`, `og-turkey.jpg` and `apple-touch-icon.png` to a GitHub Pages repo named `thanksgiving` (so the site is `biblewithfriends.github.io/thanksgiving`) and share the link in the group chat. If you use a different address, change the two `biblewithfriends.github.io/thanksgiving` links near the top of `index.html` (og:url and og:image) or the link preview won't show the turkey.
 
 If you edit `Code.gs` later, use **Deploy → Manage deployments → Edit → New version**. That keeps the same URL.
 

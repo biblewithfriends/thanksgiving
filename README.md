@@ -20,9 +20,11 @@ Until `API_URL` is set, the site runs in **preview mode**: it shows a copy of th
 
 ## How it writes to the sheet
 - **Serve** → puts the name in column D ("Sign up") of `2026-Service Sign Up`. If two people tap the same spot, the second person is asked to refresh or "Join". Joining adds `, Name` to the cell.
-- **Dishes** → `2026-Dish Sign Up`, using the first empty row in that section (Room C = columns B/C, Room D = F/G; beverages B/C, desserts F/G). If a section is full, a row is inserted above the blank row before the next section, so Room C and Room D stay lined up.
+- **Dishes** → `2026-Dish Sign Up`, using the first empty row in that section (Table 1 = the sheet's "Room C" columns B/C, Table 2 = "Room D" columns F/G; beverages B/C, desserts F/G). If a section is full, a row is inserted above the blank row before the next section, so both tables stay lined up. There's no limit on how many dishes people can bring.
 - **Invite** → adds a row to `2026 Invitation List` (Name, Shepherd, Notes, Sent, Response).
 - **Day of** → items people add to The evening, Before you leave home, or Supply boxes go on a new tab, `2026 Day Of Items`. The script creates this tab the first time. To remove an item, delete its row there.
+
+**Editing and moving:** Tapping any entry on the site lets people change it, move it or remove it. Dragging the ⠿ handle moves a serving name to another open spot, or a dish to another list. Before saving, the script checks that the cell still holds what the person saw. If someone changed it on the sheet in the meantime, nothing is overwritten and the person is asked to try again. "Church will provide" rows can only be changed on the sheet.
 
 The tab names and the header words (Meat, Seafood, Carb, Other, Beverage, Desserts, "Task") are how the script finds things. Renaming a tab or header will break it. Adding or deleting rows is fine.
 
@@ -30,4 +32,4 @@ The tab names and the header words (Meat, Seafood, Carb, Other, Beverage, Desser
 The site is public. The Invite page lists each friend's name, who invited them, and their answer. The **Notes** column is never sent to the site. To show only totals, set `SHOW_INVITE_NAMES = false` in `Code.gs`.
 
 ## Settings in index.html
-`CONFIG` at the top holds the event date, time and place, plus `TARGETS`, the number of dishes hoped for per category per room (now meat 8, seafood 3, carbs 5, sides 5, desserts 8, drinks 3). Change them freely.
+`CONFIG` at the top holds the event date, time and place.

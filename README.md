@@ -22,7 +22,7 @@ Until `API_URL` is set, the site runs in **preview mode**: it shows a copy of th
 - **Serve** → puts the name in column D ("Sign up") of `2026-Service Sign Up`. If two people tap the same spot, the second person is asked to refresh or "Join". Joining adds `, Name` to the cell.
 - **Dishes** → `2026-Dish Sign Up`, using the first empty row in that section (Table 1 = the sheet's "Room C" columns B/C, Table 2 = "Room D" columns F/G; beverages B/C, desserts F/G). If a section is full, a row is inserted above the blank row before the next section, so both tables stay lined up. There's no limit on how many dishes people can bring.
 - **Invite** → adds a row to `2026 Invitation List` (Name, Shepherd, Notes, Sent, Response).
-- **Day of** → items people add to The evening, Before you leave home, or Supply boxes go on a new tab, `2026 Day Of Items`. The script creates this tab the first time. To remove an item, delete its row there.
+- **Day of** → everything on the Day of page (The evening and Before you leave home) lives on the `2026 Day Of Items` tab. The script creates it the first time and fills in the starter items. People can add, change, remove and drag items. The Order column holds the order on the page.
 
 **Editing and moving:** Tapping any entry on the site lets people change it, move it or remove it. Dragging the ⠿ handle moves a serving name to another open spot, or a dish to another list. Before saving, the script checks that the cell still holds what the person saw. If someone changed it on the sheet in the meantime, nothing is overwritten and the person is asked to try again. "Church will provide" rows can only be changed on the sheet.
 

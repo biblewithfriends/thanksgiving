@@ -12,7 +12,7 @@
 /* =========== SETTINGS — the only part you need to edit =========== */
 const CONFIG = {
   // Paste your Apps Script Web app URL (ends in /exec). Leave "" for preview mode.
-  API_URL: "",
+  API_URL: "https://script.google.com/macros/s/AKfycbzQQf8eFoixeSQFPspf9ZyxNoCrvvwtU4NBUG-VSeqwfoLp6I7srTO252UUWG8bDYGd/exec",
   EVENT: {
     title: "Thanksgiving Love Feast",
     startISO: "2026-11-25T18:00:00-08:00",
@@ -610,7 +610,7 @@ const ROOM_NAME = {C:"Space C",D:"Space D",T:"Desserts & drinks"};
 
 /* ---------- state ---------- */
 let DATA = JSON.parse(JSON.stringify(SNAPSHOT));
-const LIVE = !!CONFIG.API_URL;
+let LIVE = !!CONFIG.API_URL, everLoaded = false;
 let filter = "all", lastSync = null, justRow = null;
 const $ = (s,el=document)=>el.querySelector(s), $$=(s,el=document)=>[...el.querySelectorAll(s)];
 const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -623,15 +623,19 @@ async function load(){
     const r = await fetch(CONFIG.API_URL+"?t="+Date.now());
     const j = await r.json();
     if(!j.ok) throw new Error(j.error);
-    DATA = j.data; lastSync = new Date(); render();
-  }catch(e){ $("#sync").textContent = "Couldn't reach the sign-up sheet — showing the last copy. "+(e.message||""); }
+    DATA = Object.assign({dayof:[]}, j.data); lastSync = new Date(); everLoaded = true; $("#demo").hidden = true; render();
+  }catch(e){
+    if(!everLoaded){ // never connected (e.g. sheet not shared, or a preview that can't reach Google): fall back to the saved copy
+      LIVE = false; $("#demo").textContent = "Couldn't reach the sign-up sheet — showing a saved copy. Sign-ups here won't be saved; please try again later."; $("#demo").hidden = false; render();
+    } else $("#sync").textContent = "Couldn't refresh just now — showing the last copy.";
+  }
 }
 async function post(payload){
   if(!LIVE){ demoApply(payload); render(); return; }
   const r = await fetch(CONFIG.API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
   const j = await r.json();
   if(!j.ok) throw new Error(j.error||"Something went wrong");
-  DATA = j.data; lastSync = new Date(); render();
+  DATA = Object.assign({dayof:[]}, j.data); lastSync = new Date(); render();
 }
 function demoApply(p){
   if(p.action==="service"){ const s=DATA.service.slots.find(x=>x.row===p.row); s.name = s.name? s.name+", "+p.name : p.name; }
@@ -875,7 +879,7 @@ route(false);
 /* ---------- go ---------- */
 $("#demo").hidden = LIVE;
 hero(); render(); load(); fillMe();
-if(LIVE) setInterval(()=>{ if(!document.querySelector("dialog[open]")) load(); }, CONFIG.REFRESH_SECONDS*1000);
+if(CONFIG.API_URL) setInterval(()=>{ if(!LIVE) return; if(!document.querySelector("dialog[open]")) load(); }, CONFIG.REFRESH_SECONDS*1000);
 </script>
 </body>
 </html>
